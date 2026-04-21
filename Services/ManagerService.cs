@@ -1,6 +1,7 @@
+using HotelManagementSystem.Contracts;
 namespace HotelManagementSystem.Services;
 
-public class ManagerService
+public class ManagerService : IManagerService
 {
     
 }

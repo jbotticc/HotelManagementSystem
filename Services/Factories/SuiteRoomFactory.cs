@@ -1,6 +1,7 @@
+using HotelManagementSystem.Domain.Models;
 namespace HotelManagementSystem.Services.Factories;
 
-public class SuiteRoomFactory
+public class SuiteRoomFactory : RoomFactory
 {
     
 }

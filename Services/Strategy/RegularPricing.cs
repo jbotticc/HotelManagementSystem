@@ -1,6 +1,7 @@
-namespace HotelManagementSystem.Domain;
+using HotelManagementSystem.Contracts;
+namespace HotelManagementSystem.Services.Strategy;
 
-public class RegularPricing
+public class RegularPricing : IPricingStrategy
 {
     
 }

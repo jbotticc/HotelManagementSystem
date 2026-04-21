@@ -1,6 +1,7 @@
-namespace HotelManagementSystem.Domain;
+using HotelManagementSystem.Contracts;
+namespace HotelManagementSystem.Services;
 
-public class PricingService
+public class PricingService : IPricingService
 {
     
 }

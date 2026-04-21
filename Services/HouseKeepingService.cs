@@ -1,6 +1,7 @@
+using HotelManagementSystem.Contracts;
 namespace HotelManagementSystem.Services;
 
-public class HouseKeepingService
+public class HouseKeepingService : IHouseKeepingService
 {
     
 }

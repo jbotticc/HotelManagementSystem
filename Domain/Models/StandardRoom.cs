@@ -1,6 +1,6 @@
-namespace HotelManagementSystem.Domain;
+namespace HotelManagementSystem.Domain.Models;
 
-public class StandardRoom
+public class StandardRoom : Room
 {
-    
+    public StandardRoom(int roomNumber) : base(roomNumber, 1) {}
 }

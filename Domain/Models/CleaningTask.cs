@@ -1,6 +1,6 @@
-namespace HotelManagementSystem.Domain;
+namespace HotelManagementSystem.Domain.Models;
 
-public class CleaningTask
+public class CleaningTask : MaintenanceTask
 {
     
 }

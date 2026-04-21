@@ -1,4 +1,4 @@
-namespace HotelManagementSystem.Domain;
+namespace HotelManagementSystem.Domain.Models;
 
 public struct Guest
 {

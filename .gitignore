@@ -1,5 +1,17 @@
+# Build output
 bin/
 obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio
+.vs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

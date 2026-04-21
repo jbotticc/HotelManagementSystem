@@ -1,6 +1,6 @@
 namespace HotelManagementSystem.Domain.Models;
 
-public class MaintenanceTask
+public abstract class MaintenanceTask
 {
     
 }

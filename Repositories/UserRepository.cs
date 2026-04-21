@@ -1,6 +1,7 @@
+using HotelManagementSystem.Contracts;
 namespace HotelManagementSystem.Repositories;
 
-public class UserRepository
+public class UserRepository : IUserRepository
 {
     
 }
