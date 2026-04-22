@@ -5,7 +5,6 @@ public struct Guest
     private string _name;
     private string _phoneNumber;
 
-    private int _roomNumber;
 
     private DateTime _checkoutDate;
 
@@ -34,9 +33,5 @@ public struct Guest
         set => _checkoutDate = value;
     }
 
-    public int RoomNumber
-    {
-        get => _roomNumber;
-        set => _roomNumber = value;
-    }
+
 }

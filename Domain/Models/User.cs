@@ -16,12 +16,16 @@ public class User
         public string EmployeeId
         {
             get => _employeeId;
-            set => _employeeId = value;
         }
 
         public Role Role
         {
             get => _role;
             set => _role = value;
+        }
+
+        public void changeRole(Role newRole)
+        {
+            _role = newRole;
         }
 }

@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using HotelManagementSystem.Domain;
 
 namespace HotelManagementSystem.Repositories;
@@ -39,6 +38,6 @@ public class UserRepository: Contracts.IUserRepository
 
     public void Delete(User user)
     {
-        _users.Remove(user);
+        _users.RemoveAll(u => u.EmployeeId == user.EmployeeId);
     }
 }
