@@ -10,6 +10,12 @@ public struct Guest
 
     public Guest(string name, string phoneNumber, DateTime checkoutDate)
     {
+      if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Guest name cannot be null or empty.");
+
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+            throw new ArgumentException("Phone number cannot be null or empty.");
+  
         _name = name;
         _phoneNumber = phoneNumber;
         _checkoutDate = checkoutDate;
@@ -18,13 +24,25 @@ public struct Guest
     public string Name
     {
         get => _name;
-        set => _name = value;
+        set 
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Guest name cannot be null or empty.");
+
+            _name = value;
+        }
     }
 
     public string PhoneNumber
     {
         get => _phoneNumber;
-        set => _phoneNumber = value;
+        set 
+         {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Phone number cannot be null or empty.");
+
+            _phoneNumber = value;
+        }
     }
 
     public DateTime CheckoutDate

@@ -9,6 +9,11 @@ public class User
 
     public User(string employeeId, Role role)
     {
+            if (string.IsNullOrWhiteSpace(employeeId))
+        {
+            throw new ArgumentException("Employee ID cannot be null or empty.");
+        }
+    
         _employeeId = employeeId;
         _role = role;
     }
@@ -21,8 +26,15 @@ public class User
         public Role Role
         {
             get => _role;
-            set => _role = value;
-        }
+        set
+        {
+            if (!Enum.IsDefined(typeof(Role), value))
+            {
+                throw new ArgumentException("Invalid role value.");
+            }
+
+            _role = value;
+        }        }
 
         public void changeRole(Role newRole)
         {

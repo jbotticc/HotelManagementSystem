@@ -20,6 +20,11 @@ public class GuestRepository : Contracts.IGuestRepository
 
     public void Add(int roomNumber, Guest guest)
     {
+  
+        if (roomNumber <= 0)
+        {
+            throw new ArgumentException("Room number must be greater than zero.");
+        }
         if (!_guests.ContainsKey(roomNumber))
         {
             _guests[roomNumber] = new List<Guest>();
@@ -30,36 +35,48 @@ public class GuestRepository : Contracts.IGuestRepository
 
     public List<Guest> GetByRoom(int roomNumber)
     {
-        if (_guests.TryGetValue(roomNumber, out List<Guest> guests))
-        {
-            return new List<Guest>(guests);
-        }
+        if (roomNumber <= 0)
+            throw new ArgumentOutOfRangeException(nameof(roomNumber), "Room number must be greater than zero.");
 
-        return new List<Guest>();
+        if (!_guests.TryGetValue(roomNumber, out List<Guest>? guests))
+            throw new KeyNotFoundException("No guests found for this room.");
+            
+        return new List<Guest>(guests);
     }
 
     public void Update(int roomNumber, Guest guest)
     {
-        if (_guests.ContainsKey(roomNumber))
-        {
-            int index = _guests[roomNumber].FindIndex(g => g.PhoneNumber == guest.PhoneNumber);
-            if (index != -1)
-            {
-                _guests[roomNumber][index] = guest;
-            }
-        }
+        if (roomNumber <= 0)
+            throw new ArgumentOutOfRangeException(nameof(roomNumber), "Room number must be greater than zero.");
+
+        if (!_guests.ContainsKey(roomNumber))
+            throw new KeyNotFoundException("Room not found.");
+
+        int index = _guests[roomNumber].FindIndex(g => g.PhoneNumber == guest.PhoneNumber);
+
+        if (index == -1)
+            throw new KeyNotFoundException("Guest not found in this room.");
+
+        _guests[roomNumber][index] = guest;
     }
 
     public void Delete(int roomNumber, Guest guest)
     {
-        if (_guests.ContainsKey(roomNumber))
-        {
-            _guests[roomNumber].RemoveAll(g => g.PhoneNumber == guest.PhoneNumber);
+        if (roomNumber <= 0)
+            throw new ArgumentOutOfRangeException(nameof(roomNumber), "Room number must be greater than zero.");
 
-            if (_guests[roomNumber].Count == 0)
-            {
-                _guests.Remove(roomNumber);
-            }
+
+        if (!_guests.ContainsKey(roomNumber))
+            throw new KeyNotFoundException("Room not found.");
+
+        int removedCount = _guests[roomNumber].RemoveAll(g => g.PhoneNumber == guest.PhoneNumber);
+
+        if (removedCount == 0)
+            throw new KeyNotFoundException("Guest not found in this room.");
+
+        if (_guests[roomNumber].Count == 0)
+        {
+            _guests.Remove(roomNumber);
         }
     }
 }
