@@ -1,4 +1,4 @@
-using HotelManagementSystem.Domain;
+using HotelManagementSystem.Domain.Models;
 
 namespace HotelManagementSystem.Contracts;
 

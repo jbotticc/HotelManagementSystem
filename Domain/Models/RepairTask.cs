@@ -13,6 +13,6 @@ public class RepairTask : MaintenanceTask
     }
 
     public override string ToString() {
-        return "Repair Task: " + String.Join(", ", DamagedItems) + "\n" + "Status: " + _status;
+        return "Repair Task: " + String.Join(", ", DamagedItems) + "\n" + "Status: " + Status;
     }
 }

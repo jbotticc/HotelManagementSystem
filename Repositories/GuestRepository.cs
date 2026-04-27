@@ -1,8 +1,8 @@
-using HotelManagementSystem.Domain;
-
+using HotelManagementSystem.Domain.Models;
+using HotelManagementSystem.Contracts;
 namespace HotelManagementSystem.Repositories;
 
-public class GuestRepository : Contracts.IGuestRepository
+public class GuestRepository : IGuestRepository
 {
     private readonly Dictionary<int, List<Guest>> _guests = new();
     private static GuestRepository _instance;

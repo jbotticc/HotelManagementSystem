@@ -1,12 +1,13 @@
 namespace HotelManagementSystem.Domain.Models;
+using HotelManagementSystem.Domain.Enums;
 
 public abstract class MaintenanceTask
 {
-    private TaskStatus _status = TaskStatus.Incomplete;
+    protected TaskStatus Status = TaskStatus.Incomplete;
 
     public void SetStatus(TaskStatus status)
     {
-        _status = status;
+        Status = status;
     }
 
     public abstract string ToString();

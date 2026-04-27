@@ -1,5 +1,5 @@
 using HotelManagementSystem.Contracts;
-using HotelManagementSystem.Domain;
+using HotelManagementSystem.Domain.Models;
 
 namespace HotelManagementSystem.Services;
 
@@ -8,7 +8,7 @@ public class FrontDeskService: IFrontDeskService
     private readonly IGuestRepository _guestRepository;
     private readonly IRoomRepository _roomRepository;
     private readonly IPricingService _pricingService;
-    public FrontDeskService( IGuestRepository guestRepository, IRoomRepository roomRepository, IPricingService pricingService)
+    public FrontDeskService(IGuestRepository guestRepository, IRoomRepository roomRepository, IPricingService pricingService)
     {
         _guestRepository = guestRepository ?? throw new ArgumentNullException(nameof(guestRepository));
         _roomRepository = roomRepository ?? throw new ArgumentNullException(nameof(roomRepository));
@@ -31,7 +31,7 @@ public class FrontDeskService: IFrontDeskService
         if (room == null)
             throw new KeyNotFoundException("Room not found.");
 
-        if (!room.Vacant)
+        if (!room.IsVacant)
             throw new InvalidOperationException("Room is already occupied.");
 
         DateTime checkoutDate = DateTime.Now.AddDays(lengthOfStay);
@@ -40,7 +40,7 @@ public class FrontDeskService: IFrontDeskService
 
         _guestRepository.Add(roomNumber, guest);
 
-        room.Vacant = false;
+        room.MarkOccupied();
         _roomRepository.Update(room);
 
         float price = _pricingService.CalculatePrice(room);
@@ -68,7 +68,7 @@ public class FrontDeskService: IFrontDeskService
             _guestRepository.Delete(roomNumber, guest);
         }
 
-        room.Vacant = true;
+        room.MarkVacant();
         _roomRepository.Update(room);
     }
 }

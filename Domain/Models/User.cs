@@ -1,43 +1,29 @@
 using HotelManagementSystem.Domain.Enums;
-
-namespace HotelManagementSystem.Domain;
+namespace HotelManagementSystem.Domain.Models;
 
 public class User
 {
-    private string _employeeId;
-    private Role _role;
-
-    public User(string employeeId, Role role)
+    public User(int employeeId, Role role)
     {
-            if (string.IsNullOrWhiteSpace(employeeId))
-        {
-            throw new ArgumentException("Employee ID cannot be null or empty.");
-        }
-    
-        _employeeId = employeeId;
-        _role = role;
+        if (employeeId <= 0)
+            throw new ArgumentException("Employee ID must be a positive integer.");
+
+        if (!Enum.IsDefined(typeof(Role), role))
+            throw new ArgumentException("Invalid role value.");
+
+        EmployeeId = employeeId;
+        Role = role;
     }
 
-        public string EmployeeId
-        {
-            get => _employeeId;
-        }
+    public int EmployeeId { get; }
 
-        public Role Role
-        {
-            get => _role;
-        set
-        {
-            if (!Enum.IsDefined(typeof(Role), value))
-            {
-                throw new ArgumentException("Invalid role value.");
-            }
+    public Role Role { get; private set; }
 
-            _role = value;
-        }        }
+    public void ChangeRole(Role newRole)
+    {
+        if (!Enum.IsDefined(typeof(Role), newRole))
+            throw new ArgumentException("Invalid role value.");
 
-        public void changeRole(Role newRole)
-        {
-            _role = newRole;
-        }
+        Role = newRole;
+    }
 }
