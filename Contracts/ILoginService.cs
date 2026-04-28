@@ -21,7 +21,7 @@ public interface ILoginService
     /// Post-conditions:
     /// - The specified user is set as the currently logged-in user
     /// </remarks>
-    void Login(string employeeId);
+    void Login(int employeeId);
     
     /// <summary>
     /// Logs the currently logged-in user out of the system.
