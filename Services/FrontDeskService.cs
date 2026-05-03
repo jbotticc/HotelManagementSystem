@@ -47,7 +47,7 @@ public class FrontDeskService: IFrontDeskService
         List<Guest> guests = _guestRepository.GetByRoom(roomNumber);
 
         if (guests.Count == 0)
-            throw new KeyNotFoundException("No guest found for this room.");
+            throw new InvalidOperationException("No guest found for this room.");
 
         foreach (Guest guest in guests)
         {

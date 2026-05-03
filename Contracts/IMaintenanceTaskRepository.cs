@@ -65,16 +65,4 @@ public interface IMaintenanceTaskRepository
     /// Postconditions: Returns a list containing all room numbers that have maintenance tasks.
     /// </remarks>
     List<int> GetRoomsWithTasks();
-
-    /// <summary>
-    /// Removes a specific maintenance task from a room's task list.
-    /// </summary>
-    /// <param name="roomNumber">The unique number identifying the room.</param>
-    /// <param name="taskNumber">The index or identifier of the task to be removed.</param>
-    /// <exception cref="KeyNotFoundException">Thrown when the <paramref name="roomNumber"/> or <paramref name="taskNumber"/> is not found.</exception>
-    /// <remarks>
-    /// Preconditions: Both <paramref name="roomNumber"/> and <paramref name="taskNumber"/> must exist in the repository.
-    /// Postconditions: The specified task is removed from the room's task list.
-    /// </remarks>
-    void RemoveTask(int roomNumber, int taskNumber);
 }

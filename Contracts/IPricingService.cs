@@ -24,7 +24,7 @@ public interface IPricingService
     /// <param name="roomNumber">The room number to calculate the price for.</param>
     /// <param name="lengthOfStay">The length of stay.</param>
     /// <returns>The calculated price as a float.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="roomNumber"/> is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the room cannot be found.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="lengthOfStay"/> is not positive.</exception>
     /// <remarks>
     /// Preconditions: A valid pricing strategy must have been set, room must exist in the system.

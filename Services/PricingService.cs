@@ -22,7 +22,6 @@ public class PricingService : IPricingService
     public float CalculatePrice(int roomNumber, int lengthOfStay)
     {
         Room room = _roomRepository.GetByRoomNumber(roomNumber);
-        if (_pricingStrategy == null) throw new InvalidOperationException("Pricing strategy has not been initialized.");
         
         return _pricingStrategy.CalculatePrice(room, lengthOfStay);
     }

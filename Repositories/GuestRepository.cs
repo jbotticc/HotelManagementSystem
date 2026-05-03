@@ -5,16 +5,12 @@ namespace HotelManagementSystem.Repositories;
 public class GuestRepository : IGuestRepository
 {
     private readonly Dictionary<int, List<Guest>> _guests = new();
-    private static GuestRepository _instance;
+    private static readonly GuestRepository _instance = new();
 
     private GuestRepository() { }
 
     public static GuestRepository GetInstance()
     {
-        if (_instance == null)
-        {
-            _instance = new GuestRepository();
-        }
         return _instance;
     }
 
@@ -23,7 +19,7 @@ public class GuestRepository : IGuestRepository
   
         if (roomNumber <= 0)
         {
-            throw new ArgumentException("Room number must be greater than zero.");
+            throw new ArgumentOutOfRangeException(nameof(roomNumber), "Room number must be greater than zero.");
         }
         if (!_guests.ContainsKey(roomNumber))
         {

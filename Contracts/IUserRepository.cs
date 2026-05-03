@@ -7,7 +7,8 @@ public interface IUserRepository
     /// Adds a new user to the repository.
     /// </summary>
     /// <param name="user">The user to add.</param>
-    /// <exception cref="InvalidOperationException">Thrown when the user is null.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when the user is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when a user with the same employee ID already exists.</exception>
     /// <remarks>
     /// Preconditions:
     /// - User must not be null
@@ -43,7 +44,8 @@ public interface IUserRepository
     /// Updates an existing user's information in the repository.
     /// </summary>
     /// <param name="user">The user with updated information.</param>
-    /// <exception cref="InvalidOperationException">Thrown when the user is null.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when the user is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the user does not exist.</exception>
     /// <remarks>
     /// Preconditions:
     /// - user must not be null
@@ -56,7 +58,8 @@ public interface IUserRepository
     /// Removes a user from the repository.
     /// </summary>
     /// <param name="user">The user to remove.</param>
-    /// <exception cref="InvalidOperationException">Thrown when the user is null.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when the user is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the user does not exist.</exception>
     /// <remarks>
     /// Preconditions:
     /// - user must not be null

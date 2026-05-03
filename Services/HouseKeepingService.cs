@@ -27,6 +27,11 @@ public class HouseKeepingService : IHouseKeepingService
         }
 
         var task = tasks[taskNumber];
+        if (task.Status == TaskStatus.Completed)
+        {
+            throw new InvalidOperationException("Task is already completed.");
+        }
+        
         task.SetStatus(TaskStatus.Completed);
 
         _tasks.Update(roomNumber, taskNumber, task);
@@ -60,7 +65,7 @@ public class HouseKeepingService : IHouseKeepingService
 
         if (taskNumber < 0) throw new ArgumentOutOfRangeException(nameof(taskNumber), "Task number cannot be negative.");
         
-        _tasks.RemoveTask(roomNumber, taskNumber);
+        _tasks.Delete(roomNumber, taskNumber);
     }
 
     public List<int> GetRoomsWithTasks()

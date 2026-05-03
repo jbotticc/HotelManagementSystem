@@ -21,6 +21,8 @@ public class UserRepository: IUserRepository
     
     public void Add(User user)
     {
+        if (user == null) throw new ArgumentNullException(nameof(user));
+        
         if (_users.Any(u => u.EmployeeId == user.EmployeeId))
             throw new InvalidOperationException("User with this employee ID already exists.");
 
@@ -44,6 +46,8 @@ public class UserRepository: IUserRepository
 
     public void Update(User user)
     {
+        if (user == null) throw new ArgumentNullException(nameof(user));
+        
         var index = _users.FindIndex(u => u.EmployeeId == user.EmployeeId);
 
         if (index == -1)
@@ -54,6 +58,8 @@ public class UserRepository: IUserRepository
 
     public void Delete(User user)
     {
+        if (user == null) throw new ArgumentNullException(nameof(user));
+        
         var removedCount = _users.RemoveAll(u => u.EmployeeId == user.EmployeeId);
 
         if (removedCount == 0)

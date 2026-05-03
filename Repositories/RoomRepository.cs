@@ -10,7 +10,9 @@ public class RoomRepository : IRoomRepository
     
     private RoomRepository() {}
     
-    public static RoomRepository GetInstance() => _instance;
+    public static RoomRepository GetInstance() {
+        return _instance;
+    }
     
     public void Add(Room room)
     {

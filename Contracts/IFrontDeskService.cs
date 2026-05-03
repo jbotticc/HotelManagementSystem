@@ -16,7 +16,7 @@ public interface IFrontDeskService
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when roomNumber or lengthOfStay is less than or equal to zero.
     /// </exception>
-    /// <exception cref="KeyNotFoundException">
+    /// <exception cref="InvalidOperationException">
     /// Thrown when the room cannot be found or is already occupied.
     /// </exception>
     /// <remarks>
@@ -37,7 +37,7 @@ public interface IFrontDeskService
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when roomNumber is less than or equal to zero.
     /// </exception>
-    /// <exception cref="KeyNotFoundException">
+    /// <exception cref="InvalidOperationException">
     /// Thrown when the room cannot be found or has no active guest.
     /// </exception>
     /// <remarks>

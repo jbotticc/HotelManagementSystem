@@ -7,12 +7,9 @@ public class MaintenanceTaskRepository : IMaintenanceTaskRepository
 {
     private Dictionary<int, List<MaintenanceTask>> _maintenanceTasks = [];
 
-    private static MaintenanceTaskRepository _instance = new();
+    private static readonly MaintenanceTaskRepository _instance = new();
     
     public static MaintenanceTaskRepository GetInstance() {
-        if (_instance == null) {
-            _instance = new MaintenanceTaskRepository();
-        }
         return _instance;
     }
 
@@ -66,18 +63,5 @@ public class MaintenanceTaskRepository : IMaintenanceTaskRepository
 
     public List<int> GetRoomsWithTasks() {
         return _maintenanceTasks.Keys.ToList();
-    }
-
-    public void RemoveTask(int roomNumber, int taskNumber) {
-        if (_maintenanceTasks.ContainsKey(roomNumber)) {
-            var list = _maintenanceTasks[roomNumber];
-            if (taskNumber >= 0 && taskNumber < list.Count) {
-                list.RemoveAt(taskNumber);
-            } else {
-                throw new KeyNotFoundException("Task number not found.");
-            }
-        } else {
-            throw new KeyNotFoundException("Room number not found.");
-        }
     }
 }

@@ -77,7 +77,7 @@ public interface IHouseKeepingService
     /// <param name="roomNumber">The unique number identifying the room.</param>
     /// <param name="taskNumber">The index or identifier of the task to remove.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="roomNumber"/> is not positive or the <paramref name="taskNumber"/> is out of range.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the task is not completed.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when the room is not found.</exception>
     /// <remarks>
     /// Preconditions: Both <paramref name="roomNumber"/> and <paramref name="taskNumber"/> must exist.
     /// Postconditions: The specified task is removed from the room.
