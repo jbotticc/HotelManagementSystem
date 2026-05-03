@@ -1,3 +1,4 @@
+using HotelManagementSystem.Domain.Factory;
 using HotelManagementSystem.Domain.Models;
 namespace HotelManagementSystem.Services.Factories;
 

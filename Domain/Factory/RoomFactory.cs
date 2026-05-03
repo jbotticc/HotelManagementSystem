@@ -1,4 +1,5 @@
-namespace HotelManagementSystem.Domain.Models;
+using HotelManagementSystem.Domain.Models;
+namespace HotelManagementSystem.Domain.Factory;
 
 public abstract class RoomFactory
 {
