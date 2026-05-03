@@ -1,6 +1,7 @@
 using HotelManagementSystem.Contracts;
 using HotelManagementSystem.Domain.Factory;
 using HotelManagementSystem.Domain.Models;
+using HotelManagementSystem.Domain.Enums;
 
 namespace HotelManagementSystem.Services;
 
@@ -8,27 +9,13 @@ public class ManagerService : IManagerService
 {
     private readonly IRoomRepository _roomRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IPricingService _pricingService;
 
-    public ManagerService(IRoomRepository roomRepository, IUserRepository userRepository)
+    public ManagerService(IRoomRepository roomRepository, IUserRepository userRepository, IPricingService pricingService)
     {
         _roomRepository = roomRepository;
         _userRepository = userRepository;
-    }
-    
-    public int ViewRevenue()
-    {
-        IReadOnlyList<Room> rooms = _roomRepository.GetAll();
-
-        var revenue = 0;
-        foreach (var room in rooms)
-        {
-            if (!room.IsVacant)
-            {
-                revenue += room.Rent;
-            }
-        }
-        
-        return revenue;
+        _pricingService = pricingService;
     }
 
     public int ViewOccupancy()
@@ -58,13 +45,21 @@ public class ManagerService : IManagerService
         _roomRepository.Add(room);
     }
 
-    public void AddUser(User user)
+    public User AddUser(Role role)
     {
-        if (user == null)
+        int newId = _userRepository.GetNextUserId();
+        User newUser = new User(newId, role);
+        _userRepository.Add(newUser);
+        return newUser;
+    }
+
+    public void SetPricingStrategy(IPricingStrategy strategy)
+    {
+        if (strategy == null)
         {
-            throw new ArgumentNullException(nameof(user));
+            throw new ArgumentNullException(nameof(strategy));
         }
         
-        _userRepository.Add(user);
+        _pricingService.SetPricingStrategy(strategy);
     }
 }

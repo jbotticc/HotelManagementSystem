@@ -63,5 +63,15 @@ public interface IUserRepository
     /// Postconditions:
     /// - User is removed from the repository
     /// </remarks>
-    void Delete(User user);  
+    void Delete(User user);
+
+    /// <summary>
+    /// Calculates and returns the next available unique Employee ID.
+    /// </summary>
+    /// <returns>An integer representing the next unique Employee ID.</returns>
+    /// <remarks>
+    /// Postconditions:
+    /// - Returns a positive integer that is not currently assigned to any user.
+    /// </remarks>
+    int GetNextUserId();
 }

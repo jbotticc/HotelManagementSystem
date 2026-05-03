@@ -30,11 +30,13 @@ public interface IRoomRepository
     /// </summary>
     /// <param name="room">The new room to replace the old room identified by its Room Number</param>
     /// <exception cref="InvalidOperationException">Thrown when a room does not already exist with the provided Room Number</exception>
+    /// <remarks>
     /// Pre-conditions:
     /// - A room must exist with the Room Number stored in the <see cref="room"/> parameter
-    ///
+    /// 
     /// Post-conditions:
     /// - The room object with the Room Number of the given room is replaced with the provided room object
+    /// </remarks>
     void Update(Room room);
     
     /// <summary>
@@ -42,10 +44,12 @@ public interface IRoomRepository
     /// </summary>
     /// <param name="roomNumber">The Room Number of the room to delete</param>
     /// <exception cref="InvalidOperationException">Thrown when the <see cref="roomNumber"/> does not match an existing room</exception>
+    /// <remarks>
     /// Pre-conditions:
     /// - A room must exist with the Room Number provided
-    ///
+    /// 
     /// Post-conditions:
     /// - The room object with the provided Room Number is deleted
+    /// </remarks>
     void Delete(int roomNumber);
 }

@@ -9,7 +9,7 @@ public class CleaningTask : MaintenanceTask
     }
 
     public override string ToString() {
-        return "Cleaning Task" + "\n" + "Deep Clean: " + IsDeepClean + "\n" + "Status: " + Status;
+        return "Cleaning Task - " + "Deep Clean: " + IsDeepClean + " - " + "Status: " + Status;
     }
 
 }

@@ -1,10 +1,12 @@
+using HotelManagementSystem.Domain.Models;
+
 namespace HotelManagementSystem.Contracts;
 /// <summary>
 /// Defines operations for front desk services such as guest check-in and check-out.
 /// </summary>
 public interface IFrontDeskService
 {
-        /// <summary>
+    /// <summary>
     /// Checks a guest into a room.
     /// </summary>
     /// <param name="roomNumber">The room number the guest will check into.</param>
@@ -48,4 +50,14 @@ public interface IFrontDeskService
     /// - Room status is updated to available
     /// </remarks>
     public void CheckOut(int roomNumber);
+
+    /// <summary>
+    /// Retrieves a list of all rooms that are currently vacant and available for rent.
+    /// </summary>
+    /// <returns>A list of vacant Room objects.</returns>
+    /// <remarks>
+    /// Postconditions:
+    /// - Returns a list containing only rooms where IsVacant is true.
+    /// </remarks>
+    public List<Room> GetAvailableRooms();
 }

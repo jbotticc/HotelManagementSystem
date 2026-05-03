@@ -3,12 +3,14 @@ using HotelManagementSystem.Domain.Enums;
 
 public abstract class MaintenanceTask
 {
-    protected TaskStatus Status = TaskStatus.Incomplete;
+    private TaskStatus _status = TaskStatus.Incomplete;
+
+    public TaskStatus Status => _status;
 
     public void SetStatus(TaskStatus status)
     {
-        Status = status;
+        _status = status;
     }
 
-    public abstract string ToString();
+    public abstract override string ToString();
 }   

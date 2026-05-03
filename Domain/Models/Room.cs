@@ -10,10 +10,12 @@ public abstract class Room
 
     protected Room(int roomNumber, int bedCount)
     {
-        RoomNumber = roomNumber;
+        RoomNumber = roomNumber > 0 ? roomNumber : throw new ArgumentOutOfRangeException(nameof(roomNumber), "Room number must be greater than zero");
         BedCount = bedCount;
         IsVacant = true;
     }
+
+    public abstract string ToString();
 
     public void MarkOccupied()
     {

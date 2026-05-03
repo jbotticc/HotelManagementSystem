@@ -14,6 +14,11 @@ public class UserRepository: IUserRepository
         return _instance;
     }
     
+    public int GetNextUserId()
+    {
+        return _users.Count + 1;
+    }
+    
     public void Add(User user)
     {
         if (_users.Any(u => u.EmployeeId == user.EmployeeId))

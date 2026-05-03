@@ -21,14 +21,15 @@ public interface IPricingService
     /// <summary>
     /// Calculates the price for a specific room using the currently set pricing strategy.
     /// </summary>
-    /// <param name="room">The room to calculate the price for.</param>
+    /// <param name="roomNumber">The room number to calculate the price for.</param>
+    /// <param name="lengthOfStay">The length of stay.</param>
     /// <returns>The calculated price as a float.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="room"/> is null.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if the pricing strategy has not been initialized.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="roomNumber"/> is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="lengthOfStay"/> is not positive.</exception>
     /// <remarks>
-    /// Preconditions: A valid pricing strategy must have been set, and the <paramref name="room"/> must not be null.
+    /// Preconditions: A valid pricing strategy must have been set, room must exist in the system.
     /// Postconditions: Returns the price as determined by the active strategy's calculation logic.
     /// </remarks>
-    float CalculatePrice(Room room);
+    float CalculatePrice(int roomNumber, int lengthOfStay);
 
-}
+}

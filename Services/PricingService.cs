@@ -6,10 +6,12 @@ namespace HotelManagementSystem.Services;
 public class PricingService : IPricingService
 {
     private IPricingStrategy _pricingStrategy;
+    private IRoomRepository _roomRepository;
 
-    public PricingService(IPricingStrategy pricingStrategy)
+    public PricingService(IPricingStrategy pricingStrategy, IRoomRepository roomRepository)
     {
         _pricingStrategy = pricingStrategy ?? throw new ArgumentNullException(nameof(pricingStrategy));
+        _roomRepository = roomRepository ?? throw new ArgumentNullException(nameof(roomRepository));
     }
 
     public void SetPricingStrategy(IPricingStrategy pricingStrategy)
@@ -17,12 +19,12 @@ public class PricingService : IPricingService
         _pricingStrategy = pricingStrategy ?? throw new ArgumentNullException(nameof(pricingStrategy));
     }
 
-    public float CalculatePrice(Room room)
+    public float CalculatePrice(int roomNumber, int lengthOfStay)
     {
-        if (room == null) throw new ArgumentNullException(nameof(room));
+        Room room = _roomRepository.GetByRoomNumber(roomNumber);
         if (_pricingStrategy == null) throw new InvalidOperationException("Pricing strategy has not been initialized.");
         
-        return _pricingStrategy.CalculatePrice(room);
+        return _pricingStrategy.CalculatePrice(room, lengthOfStay);
     }
 }
 

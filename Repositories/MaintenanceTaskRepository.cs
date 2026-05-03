@@ -63,4 +63,21 @@ public class MaintenanceTaskRepository : IMaintenanceTaskRepository
             throw new KeyNotFoundException("Room number not found.");
         }
     }
-}
+
+    public List<int> GetRoomsWithTasks() {
+        return _maintenanceTasks.Keys.ToList();
+    }
+
+    public void RemoveTask(int roomNumber, int taskNumber) {
+        if (_maintenanceTasks.ContainsKey(roomNumber)) {
+            var list = _maintenanceTasks[roomNumber];
+            if (taskNumber >= 0 && taskNumber < list.Count) {
+                list.RemoveAt(taskNumber);
+            } else {
+                throw new KeyNotFoundException("Task number not found.");
+            }
+        } else {
+            throw new KeyNotFoundException("Room number not found.");
+        }
+    }
+}

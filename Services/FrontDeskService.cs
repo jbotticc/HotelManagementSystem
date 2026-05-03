@@ -7,12 +7,10 @@ public class FrontDeskService: IFrontDeskService
 {
     private readonly IGuestRepository _guestRepository;
     private readonly IRoomRepository _roomRepository;
-    private readonly IPricingService _pricingService;
-    public FrontDeskService(IGuestRepository guestRepository, IRoomRepository roomRepository, IPricingService pricingService)
+    public FrontDeskService(IGuestRepository guestRepository, IRoomRepository roomRepository)
     {
         _guestRepository = guestRepository ?? throw new ArgumentNullException(nameof(guestRepository));
         _roomRepository = roomRepository ?? throw new ArgumentNullException(nameof(roomRepository));
-        _pricingService = pricingService ?? throw new ArgumentNullException(nameof(pricingService));
     }
 
   
@@ -24,12 +22,7 @@ public class FrontDeskService: IFrontDeskService
         if (lengthOfStay <= 0)
             throw new ArgumentOutOfRangeException(nameof(lengthOfStay), "Length of stay must be greater than zero.");
 
-        Room? room = _roomRepository
-            .GetAll()
-            .FirstOrDefault(r => r.RoomNumber == roomNumber);
-
-        if (room == null)
-            throw new KeyNotFoundException("Room not found.");
+        Room? room = _roomRepository.GetByRoomNumber(roomNumber);
 
         if (!room.IsVacant)
             throw new InvalidOperationException("Room is already occupied.");
@@ -42,8 +35,6 @@ public class FrontDeskService: IFrontDeskService
 
         room.MarkOccupied();
         _roomRepository.Update(room);
-
-        float price = _pricingService.CalculatePrice(room);
     }
 
     public void CheckOut(int roomNumber)
@@ -51,12 +42,7 @@ public class FrontDeskService: IFrontDeskService
         if (roomNumber <= 0)
             throw new ArgumentOutOfRangeException(nameof(roomNumber), "Room number must be greater than zero.");
 
-        Room? room = _roomRepository
-            .GetAll()
-            .FirstOrDefault(r => r.RoomNumber == roomNumber);
-
-        if (room == null)
-            throw new KeyNotFoundException("Room not found.");
+        Room? room = _roomRepository.GetByRoomNumber(roomNumber);
 
         List<Guest> guests = _guestRepository.GetByRoom(roomNumber);
 
@@ -70,5 +56,10 @@ public class FrontDeskService: IFrontDeskService
 
         room.MarkVacant();
         _roomRepository.Update(room);
+    }
+
+    public List<Room> GetAvailableRooms()
+    {
+        return _roomRepository.GetAll().Where(r => r.IsVacant).ToList();
     }
 }
