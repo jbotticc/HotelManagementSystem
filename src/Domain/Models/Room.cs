@@ -15,7 +15,7 @@ public abstract class Room
         IsVacant = true;
     }
 
-    public abstract string ToString();
+    public abstract override string ToString();
 
     public void MarkOccupied()
     {

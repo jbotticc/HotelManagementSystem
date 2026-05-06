@@ -38,7 +38,7 @@ public interface IFrontDeskService
     /// Thrown when roomNumber is less than or equal to zero.
     /// </exception>
     /// <exception cref="InvalidOperationException">
-    /// Thrown when the room cannot be found or has no active guest.
+    /// Thrown when the room cannot be found or is marked as vacant.
     /// </exception>
     /// <remarks>
     /// Preconditions:

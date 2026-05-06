@@ -14,19 +14,18 @@ namespace HotelManagementSystem;
 
 public class Program
 {
-    private static IUserRepository _userRepository;
-    private static IRoomRepository _roomRepository;
-    private static IMaintenanceTaskRepository _taskRepository;
+    private static IUserRepository _userRepository = UserRepository.GetInstance();
+    private static IRoomRepository _roomRepository = RoomRepository.GetInstance();
+    private static IMaintenanceTaskRepository _taskRepository = MaintenanceTaskRepository.GetInstance();
     
-    private static ILoginService _loginService;
-    private static IManagerService _managerService;
-    private static IPricingService _pricingService;
-    private static IFrontDeskService _frontDeskService;
-    private static IHouseKeepingService _houseKeepingService;
+    private static ILoginService _loginService = new LoginService(_userRepository);
+    private static IPricingService _pricingService = new PricingService(new RegularPricing(), _roomRepository);
+    private static IManagerService _managerService = new ManagerService(_roomRepository, _userRepository, _pricingService);
+    private static IFrontDeskService _frontDeskService = new FrontDeskService(GuestRepository.GetInstance(), _roomRepository);
+    private static IHouseKeepingService _houseKeepingService = new HouseKeepingService(_taskRepository, _roomRepository);
 
     public static void Main(string[] args)
     {
-        InitializeDependencies();
         CreateInitialUser();
 
         while (true)
@@ -42,19 +41,7 @@ public class Program
         }
     }
 
-    private static void InitializeDependencies()
-    {
-        _userRepository = UserRepository.GetInstance();
-        _roomRepository = RoomRepository.GetInstance();
-        _taskRepository = MaintenanceTaskRepository.GetInstance();
 
-        _loginService = new LoginService(_userRepository);
-        
-        _pricingService = new PricingService(new RegularPricing(), _roomRepository);
-        _managerService = new ManagerService(_roomRepository, _userRepository, _pricingService);
-        _frontDeskService = new FrontDeskService(GuestRepository.GetInstance(), _roomRepository);
-        _houseKeepingService = new HouseKeepingService(_taskRepository, _roomRepository);
-    }
 
     private static void CreateInitialUser()
     {
@@ -76,7 +63,7 @@ public class Program
     {
         Console.WriteLine("=== Hotel Management System Login ===");
         Console.Write("Enter Employee ID: ");
-        string idString = Console.ReadLine();
+        string? idString = Console.ReadLine();
 
         if (int.TryParse(idString, out int id))
         {
@@ -165,7 +152,7 @@ public class Program
             while (true)
             {
                 Console.WriteLine("Select Room Type: \n1. Standard \n2. Suite");
-                string type = Console.ReadLine();
+                string? type = Console.ReadLine();
                 if (type == "1") { factory = new StandardRoomFactory(); break; }
                 if (type == "2") { factory = new SuiteRoomFactory(); break; }
                 Console.WriteLine("Invalid room type.");
@@ -196,7 +183,7 @@ public class Program
             while (true)
             {
                 Console.WriteLine("Select Role:\n1. Manager\n2. FrontDesk\n3. Housekeeping");
-                string roleString = Console.ReadLine();
+                string? roleString = Console.ReadLine();
                 if (roleString == "1") { role = Role.Manager; break; }
                 if (roleString == "2") { role = Role.FrontDesk; break; }
                 if (roleString == "3") { role = Role.Housekeeping; break; }
@@ -220,7 +207,7 @@ public class Program
             while (true)
             {
                 Console.WriteLine("Select Pricing Strategy:\n1. Regular\n2. Holiday");
-                string choice = Console.ReadLine();
+                string? choice = Console.ReadLine();
                 if (choice == "1") { strategy = new RegularPricing(); break; }
                 if (choice == "2") { strategy = new HolidayPricing(); break; }
                 Console.WriteLine("Invalid choice.");
@@ -302,11 +289,17 @@ public class Program
 
             float price = _pricingService.CalculatePrice(room, stay);
             Console.WriteLine($"Price for {stay} nights: ${price:F2}");
-            Console.Write("Press Y to confirm booking: ");
-            string confirm = Console.ReadLine().ToUpper();
-            if (confirm != "Y") return;
+            Console.Write("Confirm booking? (Y/N): ");
+            string confirm = Console.ReadLine()?.ToUpper() ?? "N";
+            while (confirm != "Y" && confirm != "N")
+            {
+                Console.Write("Invalid input. Please enter Y or N: ");
+                confirm = Console.ReadLine()?.ToUpper() ?? "N";
+            }
 
-            string name;
+            if (confirm == "N") return;
+
+            string? name;
             while (true)
             {
                 Console.Write("Guest Name: ");
@@ -315,7 +308,7 @@ public class Program
                 Console.WriteLine("Input cannot be empty.");
             }
 
-            string phone;
+            string? phone;
             while (true)
             {
                 Console.Write("Phone Number: ");
@@ -324,7 +317,7 @@ public class Program
                 Console.WriteLine("Input cannot be empty.");
             }
 
-            _frontDeskService.CheckIn(room, name, phone, stay);
+            _frontDeskService.CheckIn(room, name!, phone!, stay);
 
             Console.WriteLine("Check-in successful.");
         }
@@ -436,7 +429,7 @@ public class Program
                     while (true)
                     {
                         Console.Write("Deep Clean? (y/n): ");
-                        string deepString = Console.ReadLine().ToLower();
+                        string deepString = Console.ReadLine()?.ToLower() ?? "n";
                         if (deepString == "y") { deep = true; break; }
                         if (deepString == "n") { deep = false; break; }
                         Console.WriteLine("Invalid input.");
@@ -463,7 +456,7 @@ public class Program
                     while (true)
                     {
                         Console.Write("Damaged Items (comma separated): ");
-                        string input = Console.ReadLine();
+                        string? input = Console.ReadLine();
                         if (!string.IsNullOrWhiteSpace(input))
                         {
                             items = input.Split(',').Select(s => s.Trim()).ToArray();

@@ -53,6 +53,9 @@ public class MaintenanceTaskRepository : IMaintenanceTaskRepository
             var list = _maintenanceTasks[roomNumber];
             if (taskNumber >= 0 && taskNumber < list.Count) {
                 list.RemoveAt(taskNumber);
+                if (list.Count == 0) {
+                    _maintenanceTasks.Remove(roomNumber);
+                }
             } else {
                 throw new KeyNotFoundException("Task number not found.");
             }
@@ -62,6 +65,6 @@ public class MaintenanceTaskRepository : IMaintenanceTaskRepository
     }
 
     public List<int> GetRoomsWithTasks() {
-        return _maintenanceTasks.Keys.ToList();
+        return new List<int>(_maintenanceTasks.Keys);
     }
 }

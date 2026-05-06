@@ -44,14 +44,9 @@ public class FrontDeskService: IFrontDeskService
 
         Room? room = _roomRepository.GetByRoomNumber(roomNumber);
 
-        List<Guest> guests = _guestRepository.GetByRoom(roomNumber);
-
-        if (guests.Count == 0)
-            throw new InvalidOperationException("No guest found for this room.");
-
-        foreach (Guest guest in guests)
+        if (room.IsVacant)
         {
-            _guestRepository.Delete(roomNumber, guest);
+            throw new InvalidOperationException("No guest is currently checked in to this room.");
         }
 
         room.MarkVacant();
