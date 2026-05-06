@@ -54,7 +54,7 @@ Factory Method          Creational          Domain/Factory/RoomFactory.cs       
                                                                                                     polymorphism to then create the room object with the overridden
                                                                                                     method. Allows for coding and implementation of new types of rooms 
                                                                                                     without modifying old code.
-Singleton               Creational          Domain/Repositories/RoomRepository.cs   9-15            Instantiates the first instance with static attribute 
+Singleton               Creational          Repositories/RoomRepository.cs          9-15            Instantiates the first instance with static attribute 
                                                                                                     and returns only that single instance of it for all subsequent 
                                                                                                     calls by checking if the instance already exists and returning it 
                                                                                                     if it does, otherwise creating a new instance. Ensures only one
